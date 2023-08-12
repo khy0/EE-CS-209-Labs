@@ -34,16 +34,16 @@ int main(void)
     while (1) 
     {
 		for (int i=0; i<62; i++){
-		_delay_ms(500);
-		uint16_t h = primes[i]/100;
-		usart_transmit(h + 48);
-		_delay_ms(500);
-		uint16_t t = primes[i]/10;
-		usart_transmit(48 + t - h*10);
-		_delay_ms(500);
-		usart_transmit(primes[i]%10 + 48);
-		_delay_ms(500);
-		usart_transmit(32);
+			_delay_ms(500);
+			uint16_t h = primes[i]/100;
+			usart_transmit(h + 48);
+			_delay_ms(500);
+			uint16_t t = primes[i]/10;
+			usart_transmit(48 + t - h*10);
+			_delay_ms(500);
+			usart_transmit(primes[i]%10 + 48);
+			_delay_ms(500);
+			usart_transmit(32);
 		}
     }
 	
@@ -66,7 +66,7 @@ void usart_init(uint16_t ubrr) {
 void usart_transmit (uint8_t data) {
 	
 	while( (UCSR0A & (1 << UDRE0)) == 0) {
-	
+	;
 	}
 	
 	UDR0 = data;
