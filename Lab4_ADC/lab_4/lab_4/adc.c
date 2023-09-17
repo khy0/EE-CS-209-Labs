@@ -1,3 +1,4 @@
+#include "common.h"
 #include "adc.h"
 #include <avr/io.h>
 
