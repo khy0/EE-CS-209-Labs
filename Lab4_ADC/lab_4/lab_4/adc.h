@@ -4,7 +4,7 @@
 
 #include <stdint.h> //Necessary for definitions of uint8_t etc
 
-void adc_init(void);
+void adc_init();
 uint16_t adc_read(uint8_t chan);
 int adc_convert_mv(int value);
 

@@ -10,12 +10,13 @@
 #include "common.h"
 #include <util/delay.h>
 
+
 int main(void) {
-	void adc_init(void); // Initialize the ADC
+	adc_init(); // Initialize the ADC
 
 	while (1) {
 		// Read from ADC2
-		uint16_t adc_read(uint8_t chan);
+		uint16_t adc_value = adc_read(2);
 
 		// Convert the ADC value to millivolts
 		int adc_convert_mv(int value);
