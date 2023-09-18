@@ -28,8 +28,7 @@ uint16_t adc_read(uint8_t chan) {
 	}
 
 	// Read and return the ADC result (combining ADCH and ADCL)
-	uint16_t result = ADC;
-	return adc_convert_mv(result);
+	return ADC;
 }
 
 int adc_convert_mv(int value) {
@@ -41,4 +40,25 @@ int adc_convert_mv(int value) {
 	
 	// Return the calculated millivolt value
 	return millivolts;
+}
+
+void usart_init(uint16_t ubrr) {
+	UCSR0B |= (1 << TXEN0);
+	UBRR0 = ubrr;
+}
+
+void usart_transmit (uint8_t data) {
+	
+	while( (UCSR0A & (1 << UDRE0)) == 0) {
+		;
+	}
+	
+	UDR0 = data;
+}
+
+void adc_convert_ascii(uint16_t millivolts){
+	usart_transmit(millivolts / 1000 +48);
+	usart_transmit(millivolts / 100 +48);
+	usart_transmit(millivolts / 10 +48);
+	usart_transmit(millivolts % 10 +48);
 }
