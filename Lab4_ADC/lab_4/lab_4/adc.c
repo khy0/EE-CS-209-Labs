@@ -57,8 +57,8 @@ void usart_transmit (uint8_t data) {
 }
 
 void adc_convert_ascii(uint16_t millivolts){
-	usart_transmit(millivolts / 1000 +48);
-	usart_transmit(millivolts / 100 +48);
-	usart_transmit(millivolts / 10 +48);
-	usart_transmit(millivolts % 10 +48);
+	usart_transmit(millivolts / 1000 + 48);
+	usart_transmit(millivolts / 100 + 48);
+	usart_transmit(millivolts / 10 + 48);
+	usart_transmit(millivolts % 10 + 48);
 }
