@@ -7,5 +7,6 @@
 void adc_init();
 uint16_t adc_read(uint8_t chan);
 int adc_convert_mv(int value);
+void adc_convert_ascii(uint16_t millivolts);
 
 #endif
