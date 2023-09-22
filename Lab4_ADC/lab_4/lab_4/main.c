@@ -58,16 +58,16 @@ int main(void) {
 
 	while (1) {
 		// Read from ADC2
-		//uint16_t adc_value = adc_read(2);
+		uint16_t adc_value = adc_read(2);
 
 		// Convert the ADC value to millivolts
-		//int adc_convert_mv(int value);
+		int adc_convert_mv(int value);
 
 		// You can add code here to do something with the voltage_in_mV value
 		// (like display it, send it to another device, etc.)
-		//dc_voltage_mv = ((uint32_t)adc_read(2)*5000)/1024;
-		//printf("Voltage: %d mV\n\r", (uint16_t)dc_voltage_mv);
-		//_delay_ms(500);
+		dc_voltage_mv = ((uint32_t)adc_read(2)*5000)/1024;
+		printf("Voltage: %d mV\n\r", (uint16_t)dc_voltage_mv);  
+		_delay_ms(500);
 	}
 	return 0;
 }
