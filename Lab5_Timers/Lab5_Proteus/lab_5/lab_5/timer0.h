@@ -8,4 +8,5 @@ void timer0_init();
 //if so, it will clear the compare flag and return 1
 //otherwise, it returns 0
 uint8_t timer0_check_clear_compare();
+
 #endif
