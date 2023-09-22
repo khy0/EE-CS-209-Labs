@@ -16,10 +16,7 @@ int main(void){
 	PORTB |= (1 << PORTB5);
 	//TODO: set direction of LED port to OUTPUT
 	timer0_init();
-	while(1){
-		if(timer0_check_clear_compare()) {
-			led_toggle();
-		}
-	}
+	sei(); //This special function call enables the use of interrupts
+	while (1) { }
 }
 
