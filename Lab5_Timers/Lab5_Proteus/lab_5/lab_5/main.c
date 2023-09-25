@@ -19,6 +19,8 @@ int main(void){
 	//TODO: set direction of LED port to OUTPUT
 	timer0_init();
 	sei(); //This special function call enables the use of interrupts
-	while (1) { }
+	while (1) {
+		timer0_main();
+	 }
 }
 
