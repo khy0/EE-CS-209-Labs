@@ -14,8 +14,8 @@ uint8_t segments[9] = {00111111, 00000110, 01011011, 01100110, 01101101, 0111110
 */
 
 void display_init() {
-	// set I/O pin connected to the push button as an input
-	DDRB &= ~(1 << PINB7);
+
+	
 	// anodes of LED set to output
 	DDRC |= (1 << PINC0) | (1 << PINC1);
 	DDRC |= (1 << PINC2) | (1 << PINC3);
@@ -30,12 +30,6 @@ void display_init() {
 	PORTB &= ~(1 << PORTB1);
 }
 
-void check_button() {
-	if (PORTB & (1 << PORTB7))
-	{
-		counter = 0;
-	}
-}
 
 void display_counter(uint8_t number) {
 	if (number == 1)

@@ -16,7 +16,7 @@
 
 void display_init();
 
-void check_button();
+
 
 void display_counter(uint8_t number);
 
