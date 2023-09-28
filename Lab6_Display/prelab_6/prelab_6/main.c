@@ -1,61 +1,51 @@
-/*
- * prelab_6.c
- *
- * Created: 27/09/2023 12:15:34 am
- * Author : rtor313
- */ 
-
 #define F_CPU 2000000UL
 
 #include <avr/io.h>
 #include <util/delay.h>
+#include <avr/interrupt.h>
 
 #include "display.h"
+#include "timer0.h"
 
 uint8_t counter = 0;
-uint8_t ms_counter = 0;
-
-void check_button();
-
+// uint8_t ms_counter = 0;
 
 int main(void)
 {
+	timer0_init();
+	sei();
 	display_init();
-		// set I/O pin connected to the push button as an input
-		DDRB &= ~(1 << DDB7);
-		PORTB |= (1 << PORTB7);
 	
-	
-	while (1)
-	{
+    
+    while (1) 
+    {
+		/*
 		_delay_ms(100);
-		
-		if (PINB & (1 << PINB7))
+		// When button is pressed, reset to 0
+		if (!(PINB & (1 << PINB7)))
 		{
 			counter = 0;
-			ms_counter = 0;
-
-			display_counter(counter);
-		} else {
-			// increment the ms_counter to check how much time has passed
+			ms_counter = 0;		
+		} 
+		else
+		{
+			// Increment the ms counter so that we know when 1s has passed
 			ms_counter++;
-			// if 1s has passed we want to display the value and increment the counter value
-			if (ms_counter == 10) {
+			if (ms_counter == 10) // When 1s has passed
+			{
+				// Display the number
 				display_counter(counter);
 				counter++;
 				ms_counter = 0;
-				
 			}
 		}
-		// if the counter is bigger than 9, we want to reset it back to 0
+		
+		// Once the counter reaches 9, we want to reset the number
 		if (counter > 9)
 		{
 			counter = 0;
+			display_counter(counter);
 		}
-	}
-}
-
-
-void check_button() {
-	
+		*/
+    }
 }
