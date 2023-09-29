@@ -59,11 +59,11 @@ void send_next_character_to_display(void){
 	uint8_t segment_data = disp_characters[disp_position];
 	PORTC &= ~(1 << PORTC3);
 	PORTC &= ~(1 << PORTC5);
-	uint8_t value = seg_pattern[7];
 	
+	// Now send the actual segment_data to the shift register
 	for (int8_t i=7; i >= 0; i--){
 		PORTC &= ~(1 << PORTC4);
-		PORTC |= ((value >> i) & 1) << PORTC4;
+		PORTC |= ((segment_data >> i) & 1) << PORTC4;
 		
 		PORTC |= (1 << PORTC3);
 		PORTC &= ~(1 << PORTC3);
@@ -72,7 +72,9 @@ void send_next_character_to_display(void){
 	PORTC |= (1 << PORTC5);
 	PORTC &= ~(1 << PORTC5);
 	
-	//PORTD &= ~(1 << 7);
-	
+	PORTD |= 0xF0;  // Disable all digits
+	PORTD &= ~(1 << (PORTD4 + disp_position));  // Enable the current digit
+
+	disp_position = (disp_position + 1) % 4; // Move to the next digit
 	
 }

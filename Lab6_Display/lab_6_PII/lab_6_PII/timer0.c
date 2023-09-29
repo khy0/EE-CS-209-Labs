@@ -5,8 +5,6 @@ volatile uint8_t counter_for_400ms = 0;
 volatile uint16_t main_number = 0;
 
 ISR(TIMER0_COMPA_vect) {
-	send_next_character_to_display(); // Refresh display
-
 	counter_for_400ms++;
 	if (counter_for_400ms == 40) {
 		counter_for_400ms = 0; // Reset counter
@@ -14,8 +12,9 @@ ISR(TIMER0_COMPA_vect) {
 		if (main_number > 9999) {
 			main_number = 0; // Reset main number if it goes above 9999
 		}
-		seperate_and_load_characters(main_number, 4); // Update segments, 4 is for no decimal
+		seperate_and_load_characters(main_number, 4); // Update segments
 	}
+	send_next_character_to_display(); // Refresh display
 }
 
 
