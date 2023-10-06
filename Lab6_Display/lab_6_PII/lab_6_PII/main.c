@@ -18,11 +18,12 @@ int main(void)
 	/* Replace with your application code */
 	display_init();
 	timer0_init();
+	usart_init(12);
 	sei();
 	
 	while (1)
 	{
-		_delay_ms(100); 
+		_delay_ms(400); 
 	}
 }
 

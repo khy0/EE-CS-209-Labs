@@ -14,6 +14,8 @@
 
 void display_init(void);
 void send_next_character_to_display(void);
-
+void usart_init(uint16_t UBRR);
+void usart_transmit (uint8_t data);
+void fourdigits(uint16_t millivolts);
 
 #endif /* DISPLAY_H_ */

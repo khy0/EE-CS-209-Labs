@@ -10,6 +10,33 @@ static volatile uint8_t disp_characters[4]={0,0,0,0};
 //The current digit (e.g. the 1's, the 10's) of the 4-digit number we're displaying
 static volatile uint8_t disp_position=0;
 
+void usart_init(uint16_t ubrr) {
+	// Sets the transmitter enable in register B to 1
+	UCSR0B |= (1 << TXEN0);
+	// Sets the UBRR0 register to the ubrr value
+	UBRR0 = ubrr;
+}
+
+
+void usart_transmit (uint8_t data) {
+	// checks if everything has been sent through
+	while( (UCSR0A & (1 << UDRE0)) == 0) {
+		// if UDRE0 is not 0 wait until it is 0
+		;
+	}
+	// puts the data into the UDR0 bit
+	UDR0 = data;
+}
+
+void fourdigits(uint16_t millivolts){
+	usart_transmit(millivolts / 1000 + 48);
+	usart_transmit(millivolts / 100 + 48);
+	usart_transmit(millivolts / 10 + 48);
+	usart_transmit(millivolts % 10 + 48);
+	usart_transmit('\r');
+	usart_transmit('\n');
+}
+
 void display_init(void){
 	//TODO: Finish this function
 	//Configure DDR bits of the I/O pins connected to the display
@@ -35,7 +62,8 @@ void seperate_and_load_characters(uint16_t number, uint8_t decimal_pos){
 	// e.g. For digit ‘0’ in example above disp_characters[0] = seg_pattern[0]
 	//3. For the project you may modify this pattern to add decimal point at
 	// the position ‘decemal_pos’
-	for (int i=0; i < 4; i++){
+	fourdigits(number);
+	for (int i=3; i >= 0; i--){
 		uint8_t digit = number % 10;
 		disp_characters[i] = seg_pattern[digit];
 		number /= 10;
@@ -59,7 +87,9 @@ void send_next_character_to_display(void){
 	uint8_t segment_data = disp_characters[disp_position];
 	PORTC &= ~(1 << PORTC3);
 	PORTC &= ~(1 << PORTC5);
-	
+
+	PORTD |= 0xF0;  // Disable all digits
+
 	// Now send the actual segment_data to the shift register
 	for (int8_t i=7; i >= 0; i--){
 		PORTC &= ~(1 << PORTC4);
@@ -72,7 +102,7 @@ void send_next_character_to_display(void){
 	PORTC |= (1 << PORTC5);
 	PORTC &= ~(1 << PORTC5);
 	
-	PORTD |= 0xF0;  // Disable all digits
+
 	PORTD &= ~(1 << (PORTD4 + disp_position));  // Enable the current digit
 
 	disp_position = (disp_position + 1) % 4; // Move to the next digit
